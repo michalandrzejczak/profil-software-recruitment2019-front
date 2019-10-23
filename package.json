@@ -1,0 +1,20 @@
+{
+  "name": "profil-software-recruitment2019-front",
+  "version": "1.0.0",
+  "description": "TVmaze API web app made for the recruitment process in Profil Software",
+  "keywords": "html5, css3, js, es6, tvmaze, tv series, profil software, recruitment, front end developer",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michalandrzejczak/profil-software-recruitment2019-front.git"
+  },
+  "author": "Michał Andrzejczak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michalandrzejczak/profil-software-recruitment2019-front/issues"
+  },
+  "homepage": "https://github.com/michalandrzejczak/profil-software-recruitment2019-front#readme"
+}
