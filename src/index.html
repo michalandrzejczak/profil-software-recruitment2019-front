@@ -6,15 +6,18 @@
 	<meta name="author" content="Michał Andrzejczak">
 	<meta name="keywords" content="html5, css3, js, es6, tvmaze, tv series, profil software, recruitment, front end developer">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="img/favicon.png">
-	<link rel="stylesheet" href="styles.min.css">
 </head>
 <body>
 	<header>
         <div id="test">Test</div>
     </header>
     <main>
-
+        <form id="search-form">
+            <input type="text" id="search-input" name="search" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        <section id="search-results">
+        </section>
     </main>
     <footer>
 
@@ -23,5 +26,4 @@
             src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
             crossorigin="anonymous"></script>
-	<script defer src="scripts.bundle.js"></script>
 </body>
