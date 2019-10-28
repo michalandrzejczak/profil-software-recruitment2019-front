@@ -48,9 +48,39 @@ main {
 
     #action-panel {
         margin: 20px 10px;
-        padding: 10px;
+        padding: 5px;
         background: $primaryLight;
         border-radius: 10px;
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            input#search {
+                border: none;
+                border-radius: 5px;
+                padding: 5px;
+                margin: 5px;
+                outline: none;
+                width: auto;
+            }
+
+            .action-panel__submit {
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                margin: 5px;
+                background: $primary;
+                color: #fff;
+                transition: all .2s ease;
+
+                &:hover {
+                    cursor: pointer;
+                    background: darken($primary, 5%);
+                }
+            }
+        }
     }
 
     #results-container {

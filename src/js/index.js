@@ -60,6 +60,11 @@ import _ from 'lodash';
                     page:   1,
                 },
             }).then(responseFirstPage => {
+                if (responseFirstPage.data.Error) {
+                    statusObject.error = true;
+                    statusObject.errorMessage = responseFirstPage.data.Error;
+                    return;
+                }
                 resultsObject.searchResults = [...this.getIds(responseFirstPage.data.Search)];
                 resultsObject.totalResults  = responseFirstPage.data.totalResults;
                 resultsObject.page++;
@@ -105,10 +110,10 @@ import _ from 'lodash';
                     });
                 });
             }
-
+            console.log(resultsObject);
             printResults(resultsObject.shows);
 
-            if (resultsObject.searchResultsCount() >= resultsObject.totalResults) {
+            if (!statusObject.error && resultsObject.searchResultsCount() >= resultsObject.totalResults) {
                 statusObject.limitReached = true;
                 $resultsContainer.append(`<p class="results-container__limit">No more results</p>`);
             }
