@@ -136,6 +136,11 @@ main {
                 font-weight: 700;
             }
         }
+
+        .results-container__limit {
+            color: $textGray;
+            text-align: center;
+        }
     }
 }
 
