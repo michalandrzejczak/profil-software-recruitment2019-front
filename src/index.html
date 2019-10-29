@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>OMDb API app</title>
+    <meta content="OMDb API web application made for the recruitment process purpose." name="description">
+    <meta content="Michał Andrzejczak" name="author">
+    <meta content="html5, css3, js, es6, tvmaze, tv series, profil software, recruitment, front end developer"
+          name="keywords">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+</head>
+<body>
+<header>
+    <h1 class="header__title">OBDb API app</h1>
+</header>
+<main>
+    <section id="action-panel">
+        <div class="action-panel__search-wrapper">
+            <form id="search-form">
+                <input autocomplete="off" id="search" name="search" placeholder="Search..." type="text"/>
+                <button class="action-panel__submit" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="action-panel__sort-wrapper">
+            <label for="sort">Sort by</label>
+            <select id="sort" name="sort">
+                <option value="default">-</option>
+                <option value="title">title</option>
+                <option value="rating">rating</option>
+                <option value="released">release date</option>
+            </select>
+        </div>
+    </section>
+    <section id="results-container">
+    </section>
+</main>
+<footer>
+    Profil Software October 2019 recruitment process. <a class="footer__link" href="https://michalandrzejczak.dev"
+                                                         target="_blank" title="michalandrzejczak.dev">Michał
+    Andrzejczak</a>
+</footer>
+<script
+        crossorigin="anonymous"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</body>

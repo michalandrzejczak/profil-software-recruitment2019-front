@@ -1,0 +1,14 @@
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: $primary;
+    height: 40px;
+    font-size: 0.75em;
+
+    .footer__link {
+        font-weight: 700;
+        margin-left: 5px;
+    }
+}
