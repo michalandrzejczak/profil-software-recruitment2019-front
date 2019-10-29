@@ -51,6 +51,7 @@ import _ from 'lodash';
             await statusObject.clear();
             resultsToPrint = [];
             await $resultsContainer.html('');
+            $('select#sort').val('default');
 
             await axios.get('http://www.omdbapi.com/', {
                 params: {
@@ -61,7 +62,7 @@ import _ from 'lodash';
                 },
             }).then(responseFirstPage => {
                 if (responseFirstPage.data.Error) {
-                    statusObject.error = true;
+                    statusObject.error        = true;
                     statusObject.errorMessage = responseFirstPage.data.Error;
                     return;
                 }
@@ -110,7 +111,7 @@ import _ from 'lodash';
                     });
                 });
             }
-            console.log(resultsObject);
+
             printResults(resultsObject.shows);
 
             if (!statusObject.error && resultsObject.searchResultsCount() >= resultsObject.totalResults) {
@@ -120,6 +121,7 @@ import _ from 'lodash';
         },
 
         async loadMore(query) {
+            $('select#sort').val('default');
             if (resultsObject.searchResultsCount() - resultsObject.showsCount() >= BATCH_SIZE ||
                 resultsObject.searchResultsCount() == resultsObject.totalResults) {
 
@@ -263,5 +265,38 @@ import _ from 'lodash';
             await queryObject.loadMore(searchQuery);
         }
     }, 500));
+
+    $('select#sort').on('change', async e => {
+        if (resultsObject.showsCount()) {
+            const value = e.target.value;
+
+            switch (value) {
+                case 'default':
+                    break;
+                case 'title':
+                    $resultsContainer.empty();
+                    resultsToPrint      = [];
+                    resultsObject.shows = _.orderBy(resultsObject.shows, ['title'], ['asc']);
+                    printResults(resultsObject.shows);
+                    break;
+                case 'rating':
+                    $resultsContainer.empty();
+                    resultsToPrint      = [];
+                    resultsObject.shows = _.orderBy(resultsObject.shows, ['rating'], ['desc']);
+                    printResults(resultsObject.shows);
+                    break;
+                case 'released':
+                    $resultsContainer.empty();
+                    resultsToPrint = [];
+                    resultsObject.shows = _.sortBy(resultsObject.shows, (show) =>
+                        new Date(show.released).getTime()
+                    );
+                    printResults(resultsObject.shows);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
 
 })();

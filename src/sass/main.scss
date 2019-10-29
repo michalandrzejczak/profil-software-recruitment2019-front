@@ -51,12 +51,12 @@ main {
         padding: 5px;
         background: $primaryLight;
         border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
 
         form {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-
             input#search {
                 border: none;
                 border-radius: 5px;

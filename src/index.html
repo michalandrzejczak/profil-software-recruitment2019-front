@@ -14,17 +14,29 @@
 </header>
 <main>
     <section id="action-panel">
-        <form id="search-form">
-            <input id="search" name="search" placeholder="Search..." type="text" autocomplete="off"/>
-            <button type="submit" class="action-panel__submit">Search</button>
-        </form>
+        <div class="action-panel__search-wrapper">
+            <form id="search-form">
+                <input autocomplete="off" id="search" name="search" placeholder="Search..." type="text"/>
+                <button class="action-panel__submit" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="action-panel__sort-wrapper">
+            <label for="sort">Sort by</label>
+            <select id="sort" name="sort">
+                <option value="default">-</option>
+                <option value="title">title</option>
+                <option value="rating">rating</option>
+                <option value="released">release date</option>
+            </select>
+        </div>
     </section>
     <section id="results-container">
     </section>
 </main>
 <footer>
-    Profil Software October 2019 recruitment process. <a class="footer__link" href="https://michalandrzejczak.dev" target="_blank" title="michalandrzejczak.dev">Michał
-        Andrzejczak</a>
+    Profil Software October 2019 recruitment process. <a class="footer__link" href="https://michalandrzejczak.dev"
+                                                         target="_blank" title="michalandrzejczak.dev">Michał
+    Andrzejczak</a>
 </footer>
 <script
         crossorigin="anonymous"
