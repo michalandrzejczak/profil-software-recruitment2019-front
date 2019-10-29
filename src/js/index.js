@@ -1,25 +1,30 @@
 import API_KEY from '../../api.config';
 import axios from 'axios';
 import { isMissing } from './_utils.js';
-import '../sass/main.scss';
+import '../sass/styles.scss';
 import _ from 'lodash';
 
 (function () {
-    const BATCH_SIZE        = 12;
-    const $resultsContainer = $('#results-container');
-    let resultsToPrint      = [];
+    const BATCH_SIZE        = 12,
+          $resultsContainer = $('#results-container'),
+          sortSelect        = $('select#sort');
+    let resultsToPrint      = [],
+        searchQuery;
 
     const resultsObject = {
         page:          0,
         totalResults:  0,
         searchResults: [],
         shows:         [],
+
         searchResultsCount() {
             return this.searchResults.length;
         },
+
         showsCount() {
             return this.shows.length;
         },
+
         clear() {
             this.page          = 0;
             this.totalResults  = 0;
@@ -29,13 +34,13 @@ import _ from 'lodash';
         },
     };
 
-
     const statusObject = {
         loading:      false,
         completed:    false,
         error:        false,
         limitReached: false,
         errorMessage: '',
+
         clear() {
             this.loading      = false;
             this.completed    = false;
@@ -51,7 +56,7 @@ import _ from 'lodash';
             await statusObject.clear();
             resultsToPrint = [];
             await $resultsContainer.html('');
-            $('select#sort').val('default');
+            sortSelect.val('default');
 
             await axios.get('http://www.omdbapi.com/', {
                 params: {
@@ -98,18 +103,7 @@ import _ from 'lodash';
             let endIndex = resultsObject.searchResultsCount() <= resultsObject.totalResults ? BATCH_SIZE : resultsObject.totalResults;
 
             for (let id of resultsObject.searchResults.slice(0, endIndex)) {
-                await this.getShowDetails(id).then(response => {
-                    resultsObject.shows.push({
-                        id:          response.imdbID,
-                        title:       response.Title,
-                        released:    isMissing(response.Released) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Released,
-                        runtime:     isMissing(response.Runtime) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Runtime,
-                        rating:      isMissing(response.imdbRating) ? '<span class="result-element__attr--missing">Missing info</span>' : response.imdbRating,
-                        description: isMissing(response.Plot) ? '<span class="result-element__attr--missing">Missing Description</span>' : response.Plot.substr(0, 100) + '...',
-                        awarded:     !isMissing(response.Awards),
-                        poster:      isMissing(response.Poster) ? '/assets/default_poster.png' : response.Poster,
-                    });
-                });
+                await this.getShowDetails(id).then(response => pushNewResults(response));
             }
 
             printResults(resultsObject.shows);
@@ -121,7 +115,7 @@ import _ from 'lodash';
         },
 
         async loadMore(query) {
-            $('select#sort').val('default');
+            sortSelect.val('default');
             if (resultsObject.searchResultsCount() - resultsObject.showsCount() >= BATCH_SIZE ||
                 resultsObject.searchResultsCount() == resultsObject.totalResults) {
 
@@ -130,18 +124,7 @@ import _ from 'lodash';
                 let endIndex   = resultsObject.searchResultsCount() == resultsObject.totalResults ? resultsObject.totalResults : BATCH_SIZE * resultsObject.page;
 
                 for (let id of resultsObject.searchResults.slice(startIndex, endIndex)) {
-                    await this.getShowDetails(id).then(response => {
-                        resultsObject.shows.push({
-                            id:          response.imdbID,
-                            title:       response.Title,
-                            released:    isMissing(response.Released) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Released,
-                            runtime:     isMissing(response.Runtime) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Runtime,
-                            rating:      isMissing(response.imdbRating) ? '<span class="result-element__attr--missing">Missing info</span>' : response.imdbRating,
-                            description: isMissing(response.Plot) ? '<span class="result-element__attr--missing">Missing Description</span>' : response.Plot.substr(0, 100) + '...',
-                            awarded:     !isMissing(response.Awards),
-                            poster:      isMissing(response.Poster) ? '/assets/default_poster.png' : response.Poster,
-                        });
-                    });
+                    await this.getShowDetails(id).then(response => pushNewResults(response));
                 }
 
                 printResults(resultsObject.shows.slice(startIndex, endIndex));
@@ -176,18 +159,7 @@ import _ from 'lodash';
                 });
 
                 for (let id of resultsObject.searchResults.slice(startIndex, endIndex)) {
-                    await this.getShowDetails(id).then(response => {
-                        resultsObject.shows.push({
-                            id:          response.imdbID,
-                            title:       response.Title,
-                            released:    isMissing(response.Released) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Released,
-                            runtime:     isMissing(response.Runtime) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Runtime,
-                            rating:      isMissing(response.imdbRating) ? '<span class="result-element__attr--missing">Missing info</span>' : response.imdbRating,
-                            description: isMissing(response.Plot) ? '<span class="result-element__attr--missing">Missing Description</span>' : response.Plot.substr(0, 100) + '...',
-                            awarded:     !isMissing(response.Awards),
-                            poster:      isMissing(response.Poster) ? '/assets/default_poster.png' : response.Poster,
-                        });
-                    });
+                    await this.getShowDetails(id).then(response => pushNewResults(response));
                 }
 
                 printResults(resultsObject.shows.slice(startIndex, endIndex));
@@ -249,8 +221,20 @@ import _ from 'lodash';
         }
     }
 
-    let searchQuery;
+    function pushNewResults(response) {
+        resultsObject.shows.push({
+            id:          response.imdbID,
+            title:       response.Title,
+            released:    isMissing(response.Released) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Released,
+            runtime:     isMissing(response.Runtime) ? '<span class="result-element__attr--missing">Missing info</span>' : response.Runtime,
+            rating:      isMissing(response.imdbRating) ? '<span class="result-element__attr--missing">Missing info</span>' : response.imdbRating,
+            description: isMissing(response.Plot) ? '<span class="result-element__attr--missing">Missing Description</span>' : response.Plot.substr(0, 100) + '...',
+            awarded:     !isMissing(response.Awards),
+            poster:      isMissing(response.Poster) ? '/assets/default_poster.png' : response.Poster,
+        });
+    }
 
+    /* DOM actions*/
     $('#search-form').on('submit', function (e) {
         e.preventDefault();
         searchQuery = $('input#search').val();
@@ -266,7 +250,7 @@ import _ from 'lodash';
         }
     }, 500));
 
-    $('select#sort').on('change', async e => {
+    sortSelect.on('change', async e => {
         if (resultsObject.showsCount()) {
             const value = e.target.value;
 
@@ -287,9 +271,9 @@ import _ from 'lodash';
                     break;
                 case 'released':
                     $resultsContainer.empty();
-                    resultsToPrint = [];
+                    resultsToPrint      = [];
                     resultsObject.shows = _.sortBy(resultsObject.shows, (show) =>
-                        new Date(show.released).getTime()
+                        new Date(show.released).getTime(),
                     );
                     printResults(resultsObject.shows);
                     break;

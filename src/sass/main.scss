@@ -1,47 +1,3 @@
-@import '~normalize.css/normalize.css';
-@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700&display=swap');
-@import './colors.scss';
-
-* {
-    font-family: 'Lato', sans-serif;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-}
-
-
-body {
-    color: #fff;
-    background: $backgroundGray;
-}
-
-a {
-    text-decoration: none;
-    color: #fff;
-    transition: all .2s ease;
-
-    &:hover {
-        color: darken(#fff, 20%);
-    }
-}
-
-.clearfix {
-    content: " "; /* Older browser do not support empty content */
-    visibility: hidden;
-    display: block;
-    height: 0;
-    clear: both;
-}
-
-header {
-    padding: 0 7%;
-    background: $primary;
-    border-top: 1px solid $primaryLight;
-    border-bottom: 1px solid $primaryLight;
-}
-
 main {
     min-height: 100%;
     padding: 0 7%;
@@ -171,21 +127,5 @@ main {
             color: $textGray;
             text-align: center;
         }
-    }
-}
-
-
-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background: $primary;
-    height: 40px;
-    font-size: 0.75em;
-
-    .footer__link {
-        font-weight: 700;
-        margin-left: 5px;
     }
 }
