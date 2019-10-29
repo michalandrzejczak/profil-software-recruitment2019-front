@@ -1,7 +1,6 @@
-#Profil Software Recruitment 2019
+### Profil Software Recruitment 2019
 
-####(Junior Front End Developer)
+#### (Junior Front End Developer)
+author _Michał Andrzejczak_
 
-author *Michał Andrzejczak*
-
-TBD
+>***App in early stage without filtering results, but unfortunatelly couldn't be  done as planned in time.***
